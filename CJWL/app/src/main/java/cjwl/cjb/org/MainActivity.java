@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         locationClientOption=new AMapLocationClientOption();
         locationClientOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
         locationClientOption.setNeedAddress(true);
-        locationClientOption.setOnceLocation(true);
+//        locationClientOption.setOnceLocation(true);
         locationClientOption.setWifiScan(true);
         locationClientOption.setMockEnable(false);//模拟位置
         locationClientOption.setInterval(2000);//定位间隔
