@@ -22,15 +22,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activity.MapActivity">
+        <activity android:name=".view.activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".view.activity.MapActivity"
+            android:launchMode="singleTask"/>
         <meta-data android:name="com.amap.api.v2.apikey" android:value="b666fc940c93a1fbd2a0fb8d1069a9b6">
-            //开发者申请的key
         </meta-data>
         <service android:name="com.amap.api.location.APSService"/>
     </application>
