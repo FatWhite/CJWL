@@ -14,8 +14,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
     </LinearLayout>
-    <com.amap.api.maps.MapView
-        android:id="@+id/mv_location"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+        <com.amap.api.maps.MapView
+            android:id="@+id/mv_location"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <include
+            android:id="@+id/ll_order_layout"
+            android:visibility="gone"
+            layout="@layout/layout_order_dialog"/>
+    </RelativeLayout>
 </LinearLayout>

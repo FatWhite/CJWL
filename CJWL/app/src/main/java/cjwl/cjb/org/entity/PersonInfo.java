@@ -10,6 +10,7 @@ public class PersonInfo {
     private int gender;
     private String tel;
     private String address;
+    private String name;
 
     public int getGender() {
         return gender;
@@ -33,5 +34,13 @@ public class PersonInfo {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

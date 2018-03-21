@@ -56,6 +56,8 @@ public class LocationFragment extends Fragment {
 
     private Button btnAddMarker;
 
+    private View orderLayout;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -65,6 +67,7 @@ public class LocationFragment extends Fragment {
     }
     private void initView(View v,Bundle bundle){
         mMapView =v.findViewById(R.id.mv_location);
+        orderLayout=v.findViewById(R.id.ll_order_layout);
         mMapView.onCreate(bundle);
         mapLocationClient=new AMapLocationClient(getActivity());
         mapLocationClient.setLocationListener(locationListener);
@@ -170,6 +173,7 @@ public class LocationFragment extends Fragment {
         public void onClick(View view) {
             switch (view.getId()){
                 case R.id.btn_addmarker:
+                    orderLayout.setVisibility(View.VISIBLE);
                     MarkerOptions markerOptions=new MarkerOptions();
                     markerOptions.position(new LatLng(lat+0.2,lon+0.3));
                     markerOptions.title("当前位置");
