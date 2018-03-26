@@ -31,6 +31,7 @@
         </activity>
         <activity android:name=".view.activity.MapActivity"
             android:launchMode="singleTask"/>
+        <activity android:name=".view.activity.LogisticsActivity"/>
         <meta-data android:name="com.amap.api.v2.apikey" android:value="b666fc940c93a1fbd2a0fb8d1069a9b6">
         </meta-data>
         <service android:name="com.amap.api.location.APSService"/>

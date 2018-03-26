@@ -2,6 +2,7 @@ package cjwl.cjb.org.view.activity;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -59,7 +60,9 @@ public class MapActivity extends AppCompatActivity{
                 Toast.makeText(MapActivity.this,"菜单一",Toast.LENGTH_SHORT).show();
                 break;
             case 2:
-                Toast.makeText(MapActivity.this,"菜单二",Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent();
+                intent.setClass(MapActivity.this,LogisticsActivity.class);
+                startActivity(intent);
                 break;
             case 3:
                 Toast.makeText(MapActivity.this,"菜单三",Toast.LENGTH_SHORT).show();

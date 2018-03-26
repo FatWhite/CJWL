@@ -7,9 +7,17 @@ package cjwl.cjb.org.entity;
 
 public class LogisticsInfo {
 
+    public static final int BEFORETRANS=0;
+    public static final int TRANSING=1;
+    public static final int ENDTRANS=2;
+    public static final int NOPAY=3;
+    public static final int PAYED=4;
+
+    private int status;
     private GoodsInfo goodsInfo;
     private PersonInfo senderInfo;
     private PersonInfo receiverInfo;
+
 
     public GoodsInfo getGoodsInfo() {
         return goodsInfo;
@@ -33,5 +41,13 @@ public class LogisticsInfo {
 
     public void setReceiverInfo(PersonInfo receiverInfo) {
         this.receiverInfo = receiverInfo;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

@@ -13,6 +13,7 @@ public class GoodsInfo {
     private double volume;
     private double weight;
     private int type;
+    private String name;
 
     public int getH() {
         return h;
@@ -60,5 +61,13 @@ public class GoodsInfo {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
