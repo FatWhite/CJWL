@@ -4,7 +4,6 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="mian_f1">#f1f1f1</color>
-    <color name="white">#ffffff</color>
     <color name="gray_c">#cccccc</color>
     <color name="gray_3">#333333</color>
     <color name="black">#000000</color>
@@ -12,4 +11,8 @@
     <color name="app_title_diver_line">#ececec</color>
     <color name="main_red">#E62320</color>
     <color name="cb_text_color">#FFE62521</color>
+    <color name="grey">#ebebeb</color>
+    <color name="darkgrey">#C0C0C0</color>
+    <color name="white">#FFFFFF</color>
+    <color name="red">#FF0000</color>
 </resources>
