@@ -1,4 +1,4 @@
-package cjwl.cjb.org;
+package cjwl.cjb.org.util;
 
 import android.content.Context;
 import android.hardware.Sensor;

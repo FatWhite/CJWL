@@ -4,13 +4,11 @@ import android.app.Fragment;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.ParcelUuid;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
@@ -29,7 +27,7 @@ import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 
 import cjwl.cjb.org.R;
-import cjwl.cjb.org.SensorEventHelper;
+import cjwl.cjb.org.util.SensorEventHelper;
 
 /**
  * 带方向箭头的定位
