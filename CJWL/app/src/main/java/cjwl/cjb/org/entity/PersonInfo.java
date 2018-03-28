@@ -11,6 +11,8 @@ public class PersonInfo {
     private String tel;
     private String address;
     private String name;
+    private double latitude;//纬度
+    private double longitude;//精度
 
     public int getGender() {
         return gender;
@@ -42,5 +44,21 @@ public class PersonInfo {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 }
