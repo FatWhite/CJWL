@@ -34,10 +34,22 @@ public class IApp extends Application{
         super.onCreate();
     }
 
-    private void addStartNavi(NaviLatLng latLng){
+    public void addStartNavi(NaviLatLng latLng){
         sList.add(latLng);
     }
-    private void addEndNavi(NaviLatLng latLng){
+    public void addEndNavi(NaviLatLng latLng){
         eList.add(latLng);
+    }
+    public void clearNavi(){
+        sList.clear();
+        eList.clear();
+    }
+
+    public List<NaviLatLng> getsList() {
+        return sList;
+    }
+
+    public List<NaviLatLng> geteList() {
+        return eList;
     }
 }
