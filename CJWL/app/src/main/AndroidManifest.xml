@@ -36,6 +36,7 @@
             android:launchMode="singleTask"/>
         <activity android:name=".view.activity.LogisticsActivity"/>
         <activity android:name=".view.activity.NaviActivity"/>
+        <activity android:name=".view.activity.UserInfoActivity"/>
         <activity
             android:name="com.amap.api.navi.AmapRouteActivity"
             android:configChanges="orientation|keyboardHidden|screenSize" />

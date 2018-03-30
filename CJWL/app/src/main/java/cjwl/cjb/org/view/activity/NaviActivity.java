@@ -3,6 +3,7 @@ package cjwl.cjb.org.view.activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.amap.api.navi.AMapNavi;
 import com.amap.api.navi.AMapNaviListener;
@@ -112,11 +113,13 @@ public class NaviActivity extends Activity {
     AMapNaviListener aMapNaviListener=new AMapNaviListener() {
         @Override
         public void onInitNaviFailure() {
+            Log.e("onInitNaviFailure","onInitNaviFailure");
 
         }
 
         @Override
         public void onInitNaviSuccess() {
+            Log.e("onInitNaviSuccess","onInitNaviSuccess");
 /**
  * 方法: int strategy=mAMapNavi.strategyConvert(congestion, avoidhightspeed, cost, hightspeed, multipleroute); 参数:
  *
@@ -142,162 +145,163 @@ public class NaviActivity extends Activity {
 
         @Override
         public void onStartNavi(int i) {
-
+            Log.e("onInitNaviSuccess","onStartNavi");
         }
 
         @Override
         public void onTrafficStatusUpdate() {
-
+            Log.e("onInitNaviSuccess","onTrafficStatusUpdate");
         }
 
         @Override
         public void onLocationChange(AMapNaviLocation aMapNaviLocation) {
-
+            Log.e("onInitNaviSuccess","onLocationChange");
         }
 
         @Override
         public void onGetNavigationText(int i, String s) {
-
+            Log.e("onInitNaviSuccess","onGetNavigationText");
         }
 
         @Override
         public void onGetNavigationText(String s) {
-
+            Log.e("onInitNaviSuccess","onGetNavigationText");
         }
 
         @Override
         public void onEndEmulatorNavi() {
-
+            Log.e("onInitNaviSuccess","onEndEmulatorNavi");
         }
 
         @Override
         public void onArriveDestination() {
-
+            Log.e("onInitNaviSuccess","onArriveDestination");
         }
 
         @Override
         public void onCalculateRouteFailure(int i) {
-
+            Log.e("onInitNaviSuccess","onCalculateRouteFailure");
         }
 
         @Override
         public void onReCalculateRouteForYaw() {
-
+            Log.e("onInitNaviSuccess","onReCalculateRouteForYaw");
         }
 
         @Override
         public void onReCalculateRouteForTrafficJam() {
-
+            Log.e("onInitNaviSuccess","onReCalculateRouteForTrafficJam");
         }
 
         @Override
         public void onArrivedWayPoint(int i) {
-
+            Log.e("onInitNaviSuccess","onArrivedWayPoint");
         }
 
         @Override
         public void onGpsOpenStatus(boolean b) {
-
+            Log.e("onInitNaviSuccess","onGpsOpenStatus");
         }
 
         @Override
         public void onNaviInfoUpdate(NaviInfo naviInfo) {
-
+            Log.e("onInitNaviSuccess","onNaviInfoUpdate");
         }
 
         @Override
         public void onNaviInfoUpdated(AMapNaviInfo aMapNaviInfo) {
-
+            Log.e("onInitNaviSuccess","onNaviInfoUpdated");
         }
 
         @Override
         public void updateCameraInfo(AMapNaviCameraInfo[] aMapNaviCameraInfos) {
-
+            Log.e("onInitNaviSuccess","updateCameraInfo");
         }
 
         @Override
         public void updateIntervalCameraInfo(AMapNaviCameraInfo aMapNaviCameraInfo, AMapNaviCameraInfo aMapNaviCameraInfo1, int i) {
-
+            Log.e("onInitNaviSuccess","updateIntervalCameraInfo");
         }
 
         @Override
         public void onServiceAreaUpdate(AMapServiceAreaInfo[] aMapServiceAreaInfos) {
-
+            Log.e("onInitNaviSuccess","onServiceAreaUpdate");
         }
 
         @Override
         public void showCross(AMapNaviCross aMapNaviCross) {
-
+            Log.e("onInitNaviSuccess","showCross");
         }
 
         @Override
         public void hideCross() {
-
+            Log.e("onInitNaviSuccess","hideCross");
         }
 
         @Override
         public void showModeCross(AMapModelCross aMapModelCross) {
-
+            Log.e("onInitNaviSuccess","showModeCross");
         }
 
         @Override
         public void hideModeCross() {
-
+            Log.e("onInitNaviSuccess","hideModeCross");
         }
 
         @Override
         public void showLaneInfo(AMapLaneInfo[] aMapLaneInfos, byte[] bytes, byte[] bytes1) {
-
+            Log.e("onInitNaviSuccess","showLaneInfo");
         }
 
         @Override
         public void showLaneInfo(AMapLaneInfo aMapLaneInfo) {
-
+            Log.e("onInitNaviSuccess","showLaneInfo");
         }
 
         @Override
         public void hideLaneInfo() {
-
+            Log.e("onInitNaviSuccess","hideLaneInfo");
         }
 
         @Override
         public void onCalculateRouteSuccess(int[] ints) {
             aMapNavi.startNavi(NaviType.EMULATOR);
+            Log.e("onInitNaviSuccess","onCalculateRouteSuccess");
         }
 
         @Override
         public void notifyParallelRoad(int i) {
-
+            Log.e("onInitNaviSuccess","notifyParallelRoad");
         }
 
         @Override
         public void OnUpdateTrafficFacility(AMapNaviTrafficFacilityInfo aMapNaviTrafficFacilityInfo) {
-
+            Log.e("onInitNaviSuccess","OnUpdateTrafficFacility");
         }
 
         @Override
         public void OnUpdateTrafficFacility(AMapNaviTrafficFacilityInfo[] aMapNaviTrafficFacilityInfos) {
-
+            Log.e("onInitNaviSuccess","OnUpdateTrafficFacility");
         }
 
         @Override
         public void OnUpdateTrafficFacility(TrafficFacilityInfo trafficFacilityInfo) {
-
+            Log.e("onInitNaviSuccess","OnUpdateTrafficFacility");
         }
 
         @Override
         public void updateAimlessModeStatistics(AimLessModeStat aimLessModeStat) {
-
+            Log.e("onInitNaviSuccess","updateAimlessModeStatistics");
         }
 
         @Override
         public void updateAimlessModeCongestionInfo(AimLessModeCongestionInfo aimLessModeCongestionInfo) {
-
+            Log.e("updateAimlessModeCon","updateAimlessModeCongestionInfo");
         }
 
         @Override
         public void onPlayRing(int i) {
-
+            Log.e("onPlayRing","onPlayRing");
         }
     };
 
@@ -310,6 +314,7 @@ public class NaviActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        aMapNavi.destroy();
         aMapNaviView.onDestroy();
     }
 

@@ -68,7 +68,9 @@ public class MapActivity extends AppCompatActivity implements INaviInfoCallback 
     public boolean onOptionsItemSelected(android.view.MenuItem item) {
         switch (item.getItemId()){
             case 1:
-                Toast.makeText(MapActivity.this,"菜单一",Toast.LENGTH_SHORT).show();
+                Intent uin=new Intent();
+                uin.setClass(MapActivity.this,UserInfoActivity.class);
+                startActivity(uin);
                 break;
             case 2:
                 Intent intent=new Intent();
