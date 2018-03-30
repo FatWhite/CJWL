@@ -114,11 +114,6 @@ public class LocationRotationFragment extends Fragment implements LocationSource
     @Override
     public void onPause() {
         super.onPause();
-        if (mSensorHelper != null) {
-            mSensorHelper.unRegisterSensorListener();
-            mSensorHelper.setCurrentMarker(null);
-            mSensorHelper = null;
-        }
         mapView.onPause();
         deactivate();
         mFirstFix = false;
@@ -139,6 +134,11 @@ public class LocationRotationFragment extends Fragment implements LocationSource
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (mSensorHelper != null) {
+            mSensorHelper.unRegisterSensorListener();
+            mSensorHelper.setCurrentMarker(null);
+            mSensorHelper = null;
+        }
         if (mLocMarker != null) {
             mLocMarker.destroy();
         }

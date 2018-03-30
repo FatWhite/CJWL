@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,9 +13,15 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 import com.amap.api.navi.model.NaviLatLng;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import cjwl.cjb.org.IApp;
@@ -35,14 +42,19 @@ public class LogisticsActivity extends Activity{
     private LogisticsAdapter adapter;
     private List<LogisticsInfo> logisticsInfos=new ArrayList<>();
     private Dialog dialog;
+    private AMapLocationClient mapLocationClient=null;
+    private AMapLocationClientOption locationClientOption=null;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logistics);
         initView();
         initData();
+        setUpMap();
     }
     private void initView(){
+        mapLocationClient=new AMapLocationClient(this);
+        mapLocationClient.setLocationListener(locationListener);
         dialog=new Dialog(LogisticsActivity.this,R.style.Translucent_NoTitle);
         adapter=new LogisticsAdapter(LogisticsActivity.this,logisticsInfos);
         listView=findViewById(R.id.lv_logistics_hostory);
@@ -54,6 +66,30 @@ public class LogisticsActivity extends Activity{
             }
         });
     }
+    private void setUpMap(){
+        locationClientOption=new AMapLocationClientOption();
+        locationClientOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        locationClientOption.setNeedAddress(true);
+        locationClientOption.setOnceLocation(true);
+        mapLocationClient.setLocationOption(locationClientOption);
+    }
+    public AMapLocationListener locationListener=new AMapLocationListener() {
+        @Override
+        public void onLocationChanged(AMapLocation aMapLocation) {
+            if (aMapLocation != null){
+                IApp._getApplication().addStartNavi(new NaviLatLng(aMapLocation.getLatitude(),
+                        aMapLocation.getLongitude()));
+                Intent intent=new Intent();
+                intent.setClass(LogisticsActivity.this,NaviActivity.class);
+                startActivity(intent);
+                dialog.dismiss();
+                finish();
+            }else {
+                Log.e("AMap Error",aMapLocation.getErrorCode()+"---"+
+                        aMapLocation.getErrorInfo());
+            }
+        }
+    };
 
     private void showLogisticsInfo(final LogisticsInfo logisticsInfo){
         View v= LayoutInflater.from(this).inflate(R.layout.layout_logistics_info,null);
@@ -78,36 +114,30 @@ public class LogisticsActivity extends Activity{
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mapLocationClient.startLocation();
                 IApp._getApplication().clearNavi();
-                IApp._getApplication().addStartNavi(new NaviLatLng(logisticsInfo.getSenderInfo().getLatitude(),
+                IApp._getApplication().addEndNavi(new NaviLatLng(logisticsInfo.getSenderInfo().getLatitude(),
                         logisticsInfo.getSenderInfo().getLongitude()));
-                IApp._getApplication().addEndNavi(new NaviLatLng(logisticsInfo.getReceiverInfo().getLatitude(),
-                        logisticsInfo.getReceiverInfo().getLongitude()));
-                Intent intent=new Intent();
-                intent.setClass(LogisticsActivity.this,NaviActivity.class);
-                startActivity(intent);
-                dialog.dismiss();
-                finish();
 
             }
         });
         btnRe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mapLocationClient.startLocation();
                 IApp._getApplication().clearNavi();
-                IApp._getApplication().addStartNavi(new NaviLatLng(logisticsInfo.getSenderInfo().getLatitude(),
-                        logisticsInfo.getSenderInfo().getLongitude()));
                 IApp._getApplication().addEndNavi(new NaviLatLng(logisticsInfo.getReceiverInfo().getLatitude(),
                         logisticsInfo.getReceiverInfo().getLongitude()));
-                Intent intent=new Intent();
-                intent.setClass(LogisticsActivity.this,NaviActivity.class);
-                startActivity(intent);
-                dialog.dismiss();
-                finish();
             }
         });
         dialog.setContentView(v);
         dialog.show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mapLocationClient.onDestroy();
     }
 
     private void initData(){
