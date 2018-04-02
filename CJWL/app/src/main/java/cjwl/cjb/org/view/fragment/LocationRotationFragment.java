@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
@@ -19,12 +20,19 @@ import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.BitmapDescriptor;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.Circle;
 import com.amap.api.maps.model.CircleOptions;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
+import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.geocoder.GeocodeResult;
+import com.amap.api.services.geocoder.GeocodeSearch;
+import com.amap.api.services.geocoder.RegeocodeAddress;
+import com.amap.api.services.geocoder.RegeocodeQuery;
+import com.amap.api.services.geocoder.RegeocodeResult;
 
 import cjwl.cjb.org.R;
 import cjwl.cjb.org.util.SensorEventHelper;
@@ -54,6 +62,11 @@ public class LocationRotationFragment extends Fragment implements LocationSource
     private SensorEventHelper mSensorHelper;
     private Circle mCircle;
     public static final String LOCATION_MARKER_FLAG = "mylocation";
+
+    private double lat,lon;
+    public Button btnMNFD;
+    private GeocodeSearch geocodeSearch;
+    private View orderLayout;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -64,10 +77,20 @@ public class LocationRotationFragment extends Fragment implements LocationSource
     private void initView(View v,Bundle bundle){
 //        getActivity().requestWindowFeature(Window.FEATURE_NO_TITLE);// 不显示程序的标题栏
         mapView =v.findViewById(R.id.map);
+        btnMNFD=v.findViewById(R.id.btn_mnfd);
         mapView.onCreate(bundle);// 此方法必须重写
         mLocationErrText =v.findViewById(R.id.location_errInfo_text);
+        orderLayout=v.findViewById(R.id.ll_order_layout);
         mLocationErrText.setVisibility(View.GONE);
+        geocodeSearch=new GeocodeSearch(getActivity());
+        geocodeSearch.setOnGeocodeSearchListener(geocodeSearchListener);
         init();
+        btnMNFD.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addOrder();
+            }
+        });
     }
 
     /**
@@ -158,6 +181,8 @@ public class LocationRotationFragment extends Fragment implements LocationSource
                     && amapLocation.getErrorCode() == 0) {
 
                 mLocationErrText.setVisibility(View.GONE);
+                lat=amapLocation.getLatitude();
+                lon=amapLocation.getLongitude();
                 LatLng location = new LatLng(amapLocation.getLatitude(), amapLocation.getLongitude());
                 if (!mFirstFix) {
                     mFirstFix = true;
@@ -169,7 +194,7 @@ public class LocationRotationFragment extends Fragment implements LocationSource
                     mCircle.setCenter(location);
                     mCircle.setRadius(amapLocation.getAccuracy());
                     mLocMarker.setPosition(location);
-                    aMap.moveCamera(CameraUpdateFactory.changeLatLng(location));
+//                    aMap.moveCamera(CameraUpdateFactory.changeLatLng(location)); 刷新重置中心点
                 }
             } else {
                 String errText = "定位失败," + amapLocation.getErrorCode() + ": " + amapLocation.getErrorInfo();
@@ -216,6 +241,40 @@ public class LocationRotationFragment extends Fragment implements LocationSource
         mlocationClient = null;
     }
 
+    GeocodeSearch.OnGeocodeSearchListener geocodeSearchListener=new GeocodeSearch.OnGeocodeSearchListener() {
+        @Override
+        public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
+            RegeocodeAddress address= regeocodeResult.getRegeocodeAddress();
+            String formatAddress = address.getFormatAddress();
+            Log.e("onRegeocodeSearched",formatAddress);
+        }
+
+        @Override
+        public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
+
+        }
+    };
+    private void addOrder(){
+        orderLayout.setVisibility(View.VISIBLE);
+        MarkerOptions markerOptions=new MarkerOptions();
+        markerOptions.position(new LatLng(lat+0.2,lon+0.3));
+        markerOptions.title("当前位置");
+        markerOptions.visible(true);
+        BitmapDescriptor bitmapDescriptor= BitmapDescriptorFactory.fromBitmap(
+                BitmapFactory.decodeResource(getResources(),R.drawable.car));
+        markerOptions.icon(bitmapDescriptor);
+        aMap.addMarker(markerOptions);
+        getAddressByLatlng(new LatLng(lat+0.2,lon+0.3));
+        aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat+0.2,lon+0.3),19));
+    }
+    //查询地址位置
+    private void getAddressByLatlng(LatLng latLng) {
+        //逆地理编码查询条件：逆地理编码查询的地理坐标点、查询范围、坐标类型。
+        LatLonPoint latLonPoint = new LatLonPoint(latLng.latitude, latLng.longitude);
+        RegeocodeQuery query = new RegeocodeQuery(latLonPoint, 500f, GeocodeSearch.AMAP);
+        //异步查询
+        geocodeSearch.getFromLocationAsyn(query);
+    }
     private void addCircle(LatLng latlng, double radius) {
         CircleOptions options = new CircleOptions();
         options.strokeWidth(1f);
