@@ -1,6 +1,7 @@
 package cjwl.cjb.org.view.fragment;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -35,6 +36,7 @@ import com.amap.api.services.geocoder.RegeocodeQuery;
 import com.amap.api.services.geocoder.RegeocodeResult;
 
 import cjwl.cjb.org.R;
+import cjwl.cjb.org.search.SearchActivity;
 import cjwl.cjb.org.util.SensorEventHelper;
 
 /**
@@ -64,7 +66,7 @@ public class LocationRotationFragment extends Fragment implements LocationSource
     public static final String LOCATION_MARKER_FLAG = "mylocation";
 
     private double lat,lon;
-    public Button btnMNFD;
+    public Button btnMNFD,btnSearch;
     private GeocodeSearch geocodeSearch;
     private View orderLayout;
     @Nullable
@@ -78,6 +80,7 @@ public class LocationRotationFragment extends Fragment implements LocationSource
 //        getActivity().requestWindowFeature(Window.FEATURE_NO_TITLE);// 不显示程序的标题栏
         mapView =v.findViewById(R.id.map);
         btnMNFD=v.findViewById(R.id.btn_mnfd);
+        btnSearch=v.findViewById(R.id.btn_search);
         mapView.onCreate(bundle);// 此方法必须重写
         mLocationErrText =v.findViewById(R.id.location_errInfo_text);
         orderLayout=v.findViewById(R.id.ll_order_layout);
@@ -89,6 +92,14 @@ public class LocationRotationFragment extends Fragment implements LocationSource
             @Override
             public void onClick(View view) {
                 addOrder();
+            }
+        });
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent();
+                intent.setClass(getActivity(), SearchActivity.class);
+                getActivity().startActivity(intent);
             }
         });
     }
